@@ -20,6 +20,7 @@ def create_df(num_tweets):
     date_time = []
     text = []
     retweeted = []
+    lang = []
     cursor = tweepy.Cursor(api.search, q="#tesla", tweet_mode = "extended").items(num_tweets)
     '''for i in cursor:
         print(i.full_text)'''
@@ -29,7 +30,8 @@ def create_df(num_tweets):
         date_time.append(i.created_at)
         text.append(i.full_text)
         retweeted.append(i.retweeted)
-    df = pd.DataFrame({'screen_name': screen_name, 'date_time': date_time, 'text': text, 'retweeted': retweeted})
+        lang.append(i.lang)
+    df = pd.DataFrame({'screen_name': screen_name, 'date_time': date_time, 'text': text, 'retweeted': retweeted, 'lang': lang})
     return df
 
 
@@ -47,7 +49,7 @@ if __name__ == "__main__":
     sqlite_table = "sentiment"
 
 
-    df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
+    df.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
     sqlite_connection.close()
 
 
