@@ -20,7 +20,7 @@ def create_df(num_tweets):
     date_time = []
     text = []
     retweeted = []
-    cursor = tweepy.Cursor(api.search, q="$gme", tweet_mode = "extended").items(num_tweets)
+    cursor = tweepy.Cursor(api.search, q="#tesla", tweet_mode = "extended").items(num_tweets)
     '''for i in cursor:
         print(i.full_text)'''
 
@@ -36,15 +36,15 @@ def create_df(num_tweets):
 
 if __name__ == "__main__":
     # modify this to change the number of requests. Never leave it empty!!
-    num_tweets = 1
+    num_tweets = 5
 
     df = create_df(num_tweets)
     print(df)
 
     # modify this to your local path 
-    engine = create_engine('sqlite:////Users/sean/labs/Capstone/gme.db, echo = True, pool_pre_ping = True')
+    engine = create_engine('sqlite:///sentiment.db', echo = True)
     sqlite_connection = engine.connect()
-    sqlite_table = "gme"
+    sqlite_table = "sentiment"
 
 
     df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')

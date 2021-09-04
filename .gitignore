@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 sean_keys.py
+sentiment.db
