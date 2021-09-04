@@ -21,7 +21,7 @@ def create_df(num_tweets):
     text = []
     retweeted = []
     lang = []
-    cursor = tweepy.Cursor(api.search, q="#tesla", tweet_mode = "extended").items(num_tweets)
+    cursor = tweepy.Cursor(api.search, q="tesla", tweet_mode = "extended").items(num_tweets)
     '''for i in cursor:
         print(i.full_text)'''
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     sqlite_table = "sentiment"
 
 
-    df.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
+    df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
     sqlite_connection.close()
 
 

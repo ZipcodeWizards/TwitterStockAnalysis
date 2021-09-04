@@ -7,10 +7,10 @@ lets git it done
 
 ## Steps
 - api to stream data into a dataframe. 900 requests per 15 minutes is maximum
-- output df into a sqlite3 database
-- clean database with spark: get rid of retweets, remove punctuation, get rid of stopwords (is this done out of pyspark or within pyspark?) - Sean
-- output database to a pandas dataframe - Sean
-- perform NLP sentiment analysis - Both
+- output df into a sqlite3 database DONE
+- clean database with spark: get rid of retweets, remove punctuation, get rid of stopwords (is this done out of pyspark or within pyspark?) - Sean 
+- output database from sqlite3 to a pandas dataframe for nltk - Sean 
+- perform NLP sentiment analysis - Both 
 - perform data visualizations with plotly - 
 - place code into docker and then have kubernetes run the code - Both
 - stretch goal: create a dash webapp with plotly
