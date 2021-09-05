@@ -59,7 +59,7 @@ def create_df(num_tweets):
 
 if __name__ == "__main__":
     # modify this to change the number of requests. Never leave it empty!!
-    num_tweets = 5
+    num_tweets = 20
 
     df = create_df(num_tweets)
     print(df)

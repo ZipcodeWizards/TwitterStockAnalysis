@@ -26,6 +26,8 @@ if __name__ == '__main__':
     # drop original index
     spark_DF_No_index = spark_DF_En.drop('index')
 
+    spark_DF_No_index = spark_DF_No_index.drop('retweeted')
+
     # convert our final spark cleaned index to a pandas df 
     pandasDF = spark_DF_No_index.toPandas()
 
