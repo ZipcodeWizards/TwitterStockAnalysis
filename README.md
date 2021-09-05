@@ -11,6 +11,8 @@ lets git it done
 - clean database with spark: get rid of retweets, remove punctuation, get rid of stopwords (is this done out of pyspark or within pyspark?) - Sean 
 - output database from sqlite3 to a pandas dataframe for nltk - Sean 
 - perform NLP sentiment analysis - Both 
+- set up historic stock api
+- compair stock from earliest tweet to latest tweet
 - perform data visualizations with plotly - 
 - place code into docker and then have kubernetes run the code - Both
 - stretch goal: create a dash webapp with plotly
