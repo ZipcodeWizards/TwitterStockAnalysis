@@ -24,3 +24,7 @@ api > pandas df > sql database > pull into pyspark df (set time frames)> clean p
 - create a sentiment.db in your local directory
 - add your db to .gitignore
 - modify line 41 in gme_script and appl_script to the path of sentiment
+
+### Setting Up your Virtual Environment
+
+- source <venv>/bin/activate

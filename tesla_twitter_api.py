@@ -5,6 +5,8 @@ from sean_keys import consumer_key, consumer_secret, access_token, access_token_
 from sys import exit
 import pandas as pd
 from sqlalchemy import create_engine
+from os.path import isfile
+from os import access, R_OK
 
 # connect to api
 def oauth_authenticate():
@@ -12,6 +14,25 @@ def oauth_authenticate():
     auth.set_access_token(access_token,access_token_secret)
     return tweepy.API(auth)
 
+
+def db_create(sqlite_file):
+    conn = connect(sqlite_file)
+    create_table =  'CREATE TABLE sentiment ('
+    create_table += 'index INTEGER PRIMARY KEY AUTOINCREMENT, '
+    create_table += 'screen_name VARCHAR(30), '
+    create_table += 'created_at DATETIME, '
+    create_table += 'tweet VARCHAR(255)'
+    create_table += 'retweeted INTEGER, '
+    create_table += 'lang VARCHAR(10), '
+
+    create_table += ')'
+
+    conn.cursor().execute(create_table)
+    conn.commit()
+    conn.close()
+
+def db_file_exists(path):
+  return isfile(path) and access(path, R_OK)
 
 def create_df(num_tweets):
 
@@ -43,10 +64,15 @@ if __name__ == "__main__":
     df = create_df(num_tweets)
     print(df)
 
+    if not db_file_exists('sentiment.db'):
+        db_create('sentiment.db')
+
     # modify this to your local path 
     engine = create_engine('sqlite:///sentiment.db', echo = True)
     sqlite_connection = engine.connect()
     sqlite_table = "sentiment"
+
+    # create table schema
 
 
     df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')

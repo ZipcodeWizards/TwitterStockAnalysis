@@ -23,7 +23,11 @@ if __name__ == '__main__':
     sparkDFnoRT = sparkDF.filter(~sparkDF.text.startswith('RT'))
     spark_DF_En = sparkDFnoRT.filter(sparkDFnoRT.lang.contains('en'))
 
-    pandasDF = spark_DF_En.toPandas()
+    # drop original index
+    spark_DF_No_index = spark_DF_En.drop('index')
+
+    # convert our final spark cleaned index to a pandas df 
+    pandasDF = spark_DF_No_index.toPandas()
 
     # connect to sqlite3 database
     engine = create_engine('sqlite:///sentiment.db', echo = True)
