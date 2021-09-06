@@ -1,5 +1,5 @@
 import tweepy
-
+from time import sleep
 from sqlite3 import connect
 from sean_keys import consumer_key, consumer_secret, access_token, access_token_secret
 from sys import exit
@@ -55,8 +55,11 @@ def create_df():
     all_tweets.extend(tweets)
     oldest_id = tweets[-1].id
 
+    # modify query to only get user.place.country_code = 'US'
+    # in one of the cleaning stages, segment by state in user.place.full_name which is a str. I.e. Boulder, CO
+
     #change for to while true for max data
-    #for _ in range(loopsOf200Tweets):
+    #for _ in range():
     while True:
         try:
             tweets = api.search(q="tesla -filter:retweets", 
@@ -68,8 +71,6 @@ def create_df():
         except tweepy.error.RateLimitError:
             print('timed out, too many request')
             break              
-        if len(tweets) == 0:
-            break
         oldest_id = tweets[-1].id
         all_tweets.extend(tweets)
         print('N of tweets downloaded till now {}'.format(len(all_tweets)))
@@ -86,10 +87,9 @@ def create_df():
 
 
 
-if __name__ == "__main__":
-    # modify this to change the number of requests. Never leave it empty!!
-    loopsOf200Tweets = 20
 
+if __name__ == "__main__":
+   
     df = create_df()
     print(df)
 
