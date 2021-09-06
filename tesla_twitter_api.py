@@ -1,5 +1,5 @@
 import tweepy
-
+from time import sleep
 from sqlite3 import connect
 from sean_keys import consumer_key, consumer_secret, access_token, access_token_secret
 from sys import exit
@@ -42,24 +42,35 @@ def create_df(num_tweets):
     text = []
     retweeted = []
     lang = []
-    cursor = tweepy.Cursor(api.search, q="tesla", tweet_mode = "extended").items(num_tweets)
+    
+
+
+    cursor = tweepy.Cursor(api.search, q="tesla", tweet_mode = "extended", lang = 'en', include_rts = False).items(num_tweets)
+        #print(cursor)
     '''for i in cursor:
         print(i.full_text)'''
-
     for i in cursor:
         screen_name.append(i.user.screen_name)
         date_time.append(i.created_at)
         text.append(i.full_text)
         retweeted.append(i.retweeted)
         lang.append(i.lang)
+
     df = pd.DataFrame({'screen_name': screen_name, 'date_time': date_time, 'text': text, 'retweeted': retweeted, 'lang': lang})
     return df
 
 
+class MyStreamListener(tweepy.StreamListener):
+    def on_status(self, status):
+        print(status.text)
+
+myStreamListener = MyStreamListener()
+myStream = tweepy.Stream(auth = api.auth, listener=myStreamListener())
+
 
 if __name__ == "__main__":
     # modify this to change the number of requests. Never leave it empty!!
-    num_tweets = 20
+    num_tweets = 10
 
     df = create_df(num_tweets)
     print(df)
