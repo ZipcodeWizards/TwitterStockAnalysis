@@ -6,7 +6,7 @@ lets git it done
 - We want to compare Stock Performance vs Twitter Sentiment of a company. We will be plotting the delta change in a stock's price vs average viewpoint of a company on Twitter (over an hour, a day?)
 
 ## Steps
-- api to stream data into a dataframe. 900 requests per 15 minutes is maximum
+- api to stream data into a dataframe. got 18000 per 15 minutes
 - output df into a sqlite3 database DONE
 - clean database with spark: get rid of retweets, remove punctuation, get rid of stopwords (is this done out of pyspark or within pyspark?) - Sean 
 - output database from sqlite3 to a pandas dataframe for nltk - Sean 

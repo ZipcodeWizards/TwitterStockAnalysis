@@ -55,6 +55,9 @@ def create_df():
     all_tweets.extend(tweets)
     oldest_id = tweets[-1].id
 
+    # modify query to only get user.place.country_code = 'US'
+    # in one of the cleaning stages, segment by state in user.place.full_name which is a str. I.e. Boulder, CO
+
     #change for to while true for max data
     #for _ in range():
     while True:
