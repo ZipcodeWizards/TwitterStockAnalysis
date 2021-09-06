@@ -34,7 +34,7 @@ def db_create(sqlite_file):
 def db_file_exists(path):
   return isfile(path) and access(path, R_OK)
 
-def create_df(num_tweets):
+def create_df(loopsOf200Tweets):
 
     api = oauth_authenticate()
     screen_name = []
@@ -42,16 +42,37 @@ def create_df(num_tweets):
     text = []
     retweeted = []
     lang = []
-    cursor = tweepy.Cursor(api.search, q="tesla", tweet_mode = "extended").items(num_tweets)
-    '''for i in cursor:
-        print(i.full_text)'''
+    
+    tweets = api.search(q="tesla -filter:retweets",
+                         tweet_mode = "extended", 
+                         lang = 'en', 
+                         include_rts = False, 
+                         count = 200)
 
-    for i in cursor:
-        screen_name.append(i.user.screen_name)
-        date_time.append(i.created_at)
-        text.append(i.full_text)
-        retweeted.append(i.retweeted)
-        lang.append(i.lang)
+    all_tweets = []
+    all_tweets.extend(tweets)
+    oldest_id = tweets[-1].id
+
+    #change for to while true for max data
+    for _ in range(loopsOf200Tweets):
+        tweets = api.search(q="tesla -filter:retweets", 
+                            tweet_mode = "extended", 
+                            lang = 'en', 
+                            include_rts = False, 
+                            count = 200, 
+                            max_id = oldest_id -1)
+        if len(tweets) == 0:
+            break
+        oldest_id = tweets[-1].id
+        all_tweets.extend(tweets)
+        #print('N of tweets downloaded till now {}'.format(len(all_tweets)))
+
+    for tweet in all_tweets:
+        screen_name.append(tweet.user.screen_name)
+        date_time.append(tweet.created_at)
+        text.append(tweet.full_text)
+        retweeted.append(tweet.retweeted)
+        lang.append(tweet.lang)
     df = pd.DataFrame({'screen_name': screen_name, 'date_time': date_time, 'text': text, 'retweeted': retweeted, 'lang': lang})
     return df
 
@@ -59,9 +80,9 @@ def create_df(num_tweets):
 
 if __name__ == "__main__":
     # modify this to change the number of requests. Never leave it empty!!
-    num_tweets = 20
+    loopsOf200Tweets = 1
 
-    df = create_df(num_tweets)
+    df = create_df(loopsOf200Tweets)
     print(df)
 
     if not db_file_exists('sentiment.db'):
