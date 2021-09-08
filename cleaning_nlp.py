@@ -10,13 +10,12 @@ from pytz import timezone
 
 
 if __name__ == '__main__':
-    # yesterday's date
-    current_time = datetime.date.timedelta(days = 1)
-
     con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
-    # 
+
+    #df = pd.read_sql_query("SELECT * FROM spark_cleaned", con)
     df = pd.read_sql_query("SELECT * FROM spark_cleaned", con)
-    df = df.rename(columns = {'date_time': 'date_time_est'})
+    df = df.rename(columns = {'date_time': 'date_time_est'})    
+    df = df.drop_duplicates()
 
     eastern = timezone('US/Eastern')
     utc = timezone('UTC')
@@ -28,36 +27,51 @@ if __name__ == '__main__':
         utc_created_at = utc.localize(created_at)
         #print(utc_created_at)
         row = utc_created_at.astimezone(eastern)
-        df.loc[index, 'date_time_est'] = row
+        df.loc[index, 'date_time_est'] = str(row)
         #print(est_created_at)
-        #print(type(row))   
-
+        #print(type(row))
+    
     df_drop_index = df.drop(columns = 'index')
-    print('length of incoming df: ', len(df_drop_index))
 
-    df_no_dupes = df_drop_index.drop_duplicates()
-    print('length of no duplicates: ', len(df_no_dupes))
+    # df_drop_index.head()
+
+    # remove duplicates 
+    df_no_dupes = df_drop_index
+    
 
     # use regex to remove @usernames
+
     df_no_dupes['text'] = df_no_dupes['text'].str.replace('@[^\s]+','')
+    #re.sub('@[^\s]+','',Tweet)
 
     # use regex to remove punctuation and emojis 
     df_no_dupes["text"] = df_no_dupes["text"].str.replace('[^\w\s]','')
+
+    for index, row in df_no_dupes['date_time_est'].iteritems():
+    #print(row[:10])
+    # time is currently utc
+        df_no_dupes.loc[index, 'time'] = row[11:19]
+        df_no_dupes.loc[index, 'new_date'] = row[:10]
+        df_no_dupes.head()
+
+    df_no_dupes = df_no_dupes.drop(columns = 'date_time_est')
 
     # make all text lowercase
     df_no_dupes['text'] = df_no_dupes['text'].apply(lambda x: x.lower())
 
     # remove stop words 
     stop = stopwords.words('english')
+
     df_no_dupes['text'] = df_no_dupes['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
     # clean up indexes
     df = df_no_dupes
     df = df.reset_index(drop=True)
 
-    # nlp 
-
+    # nlp
     df[['polarity', 'subjectivity']] = df['text'].apply(lambda Text: pd.Series(TextBlob(Text).sentiment))
+
+    # NLP for sentiment, neg, neu, pos, compound
 
     for index, row in df['text'].iteritems():
         score = SentimentIntensityAnalyzer().polarity_scores(row)
@@ -79,12 +93,13 @@ if __name__ == '__main__':
         df.loc[index, 'neu'] = neu
         df.loc[index, 'pos'] = pos
         df.loc[index, 'compound'] = comp
+
     
-    
+
     engine = create_engine('sqlite:///sentiment.db', echo = True)
     sqlite_connection = engine.connect()
     sqlite_table = "nlp_analysis"
-    # change from append to replace, depending on if you want to remake a db or add to db 
-    df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
-    df.to_csv('cleaned_nlp')
+
+    df.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
+
     sqlite_connection.close()
