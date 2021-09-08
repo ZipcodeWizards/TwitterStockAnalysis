@@ -4,7 +4,8 @@ from sqlite3 import connect
 from sqlalchemy import create_engine
 from sean_keys import chuck_key
 
-if __name__ == '__main__':
+
+def main4():
   engine = create_engine('sqlite:///sentiment.db', echo = True)
   sqlite_connection = engine.connect()
   sqlite_table = "tsla_stock_prices"
@@ -29,3 +30,6 @@ if __name__ == '__main__':
   df.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
   
   sqlite_connection.close()
+
+if __name__ == '__main__':
+  main4()
