@@ -18,10 +18,13 @@ if __name__ == '__main__':
             .getOrCreate()
 
     sparkDF = spark.createDataFrame(df)
+    sparkDF = df.dropDuplicates()
 
     # clean for retweets and only english
     sparkDFnoRT = sparkDF.filter(~sparkDF.text.startswith('RT'))
     spark_DF_En = sparkDFnoRT.filter(sparkDFnoRT.lang.contains('en'))
+
+
 
     # drop original index
     spark_DF_No_index = spark_DF_En.drop('index')

@@ -33,7 +33,7 @@ def line_graph():
     dftweets_2 = dftweets_2.reset_index(drop=True)
 
     dfstock[['avg_polarity',"num_of_tweets"]]=0
-
+    print(dftweets_2)
     for index, row in dfstock['time'].iteritems():
         if index == 0:
             num_tweets = dftweets_2.time.searchsorted(str(row)+'%', side = 'right')
@@ -59,7 +59,7 @@ def line_graph():
     )
     # Add figure title
     fig.update_layout(
-        title_text="Stock and Tweet Sentament"
+        title_text="Stock and Tweet Sentiment"
     )
 
     # Set x-axis title
@@ -70,10 +70,15 @@ def line_graph():
     fig.update_yaxes(title_text="Polarity", secondary_y=True)
 
     fig.show()
+    print(dfstock)
 
 if __name__ == "__main__":
-    dfstock = pd.read_csv('stock_graph.csv')
-    dftweets= pd.read_csv('data_graph.csv')
+    #dfstock = pd.read_csv('stock_graph.csv')
+    #dftweets= pd.read_csv('data_graph.csv')
+    con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
+    # need select word cloud from the day before
+    dftweets = pd.read_sql_query("SELECT * FROM nlp_analysis", con)   
+    dfstock = pd.read_sql_query("SELECT * FROM tsla_prices_cleaned", con)  
 
     line_graph()
-    create_wordcloud(df["text"].values)
+    #create_wordcloud(df["text"].values)
