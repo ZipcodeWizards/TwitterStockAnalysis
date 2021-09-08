@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from sqlite3 import connect
 from sqlalchemy import create_engine
-from sean_keys import market_stack_key, chuck_key
+from sean_keys import chuck_key
 
 if __name__ == '__main__':
   engine = create_engine('sqlite:///sentiment.db', echo = True)
@@ -25,7 +25,7 @@ if __name__ == '__main__':
   df = pd.DataFrame(api_response['data'])
   #print(api_response)
   #print(df)
-
+  #df.to_csv('stock.csv')
   df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
   
   sqlite_connection.close()
