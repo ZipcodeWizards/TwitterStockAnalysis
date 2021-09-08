@@ -12,7 +12,7 @@ def ret(value):
 if __name__ == "__main__":
     # connect to db
     con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
-    df = pd.read_sql_query("SELECT * FROM tsla_stock_prices", con)
+    df = pd.read_sql_query("SELECT * FROM tsla_stock_prices WHERE date LIKE '2021-09-07%' ", con)
     
     # create new columns, last and date
     df_2_columns = df[['last', 'date']]

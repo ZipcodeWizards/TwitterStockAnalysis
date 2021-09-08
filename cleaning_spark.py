@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 if __name__ == '__main__':
     con = sqlite3.connect('sentiment.db')
 
-    df = pd.read_sql_query("SELECT * FROM sentiment", con)
+    df = pd.read_sql_query("SELECT * FROM sentiment WHERE date_time LIKE '2021-09-05%' ", con)
 
     # create SparkSession
     spark = SparkSession.builder \
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     engine = create_engine('sqlite:///sentiment.db', echo = True)
     sqlite_connection = engine.connect()
     sqlite_table = "spark_cleaned"
-    pandasDF.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
+    pandasDF.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
     sqlite_connection.close()
 
     spark.stop()
