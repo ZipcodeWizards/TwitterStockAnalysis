@@ -6,7 +6,8 @@ from sqlite3 import connect
 from sqlalchemy import create_engine
 
 
-if __name__ == '__main__':
+
+def main2():
     con = sqlite3.connect('sentiment.db')
 
     df = pd.read_sql_query("SELECT * FROM sentiment WHERE date_time LIKE '2021-09-05%' ", con)
@@ -42,3 +43,6 @@ if __name__ == '__main__':
     sqlite_connection.close()
 
     spark.stop()
+
+if __name__ == '__main__':
+        main2()

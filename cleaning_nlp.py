@@ -9,7 +9,8 @@ from datetime import date, datetime
 from pytz import timezone
 
 
-if __name__ == '__main__':
+
+def main3():
     con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
 
     #df = pd.read_sql_query("SELECT * FROM spark_cleaned", con)
@@ -103,3 +104,6 @@ if __name__ == '__main__':
     df.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
 
     sqlite_connection.close()
+
+if __name__ == '__main__':
+    main3()
