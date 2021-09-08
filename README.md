@@ -18,7 +18,7 @@ lets git it done
 - stretch goal: create a dash webapp with plotly
 - upload to heroku
 
-api > pandas df > sql database > pull into pyspark df (set time frames)> clean pyspark df > load back into a new db > put (time framed) data back into a pandas df > create plotly visualizations from timeframed pandas df > python creates vizs that are then placed into a slide deck
+#### api > pandas df > sql database > pull into pyspark df (set time frames)> clean pyspark df > load back into a new db > put (time framed) data back into a pandas df > create plotly visualizations from timeframed pandas df > python creates vizs that are then placed into a slide deck
 
 
 ### Setting Up your SQLite3 Database
@@ -30,3 +30,8 @@ api > pandas df > sql database > pull into pyspark df (set time frames)> clean p
 ### Setting Up your Virtual Environment
 
 - source <venv>/bin/activate
+
+### Tesla Twitter Run @ 5:00 pm daily
+### stock api run following day at ???
+
+apis > spark_clean > nlp > clean > plotly

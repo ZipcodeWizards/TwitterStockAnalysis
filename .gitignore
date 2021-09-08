@@ -130,3 +130,6 @@ dmypy.json
 
 sean_keys.py
 sentiment.db
+nlp_analysis.db
+tesla_stock_prices.db
+ 
