@@ -100,7 +100,7 @@ def main():
 
     df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
     sqlite_connection.close()
-
+    print('finished step 1')
 
 
 if __name__ == "__main__":

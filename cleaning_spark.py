@@ -19,7 +19,7 @@ def main2():
             .getOrCreate()
 
     sparkDF = spark.createDataFrame(df)
-    sparkDF = df.dropDuplicates()
+    sparkDF = sparkDF.distinct()
 
     # clean for retweets and only english
     sparkDFnoRT = sparkDF.filter(~sparkDF.text.startswith('RT'))
