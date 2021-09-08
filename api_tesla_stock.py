@@ -26,6 +26,6 @@ if __name__ == '__main__':
   #print(api_response)
   #print(df)
   #df.to_csv('stock.csv')
-  df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
+  df.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
   
   sqlite_connection.close()
