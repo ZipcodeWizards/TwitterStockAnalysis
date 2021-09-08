@@ -3,7 +3,7 @@ import api_tesla_stock
 import cleaning_spark
 import cleaning_nlp
 import cleaning_tsla_prices
-import plotly_graphs
+#import plotly_graphs
 
 
 
@@ -15,4 +15,4 @@ if __name__ == '__main__':
     cleaning_nlp
     api_tesla_stock
     cleaning_tsla_prices
-    plotly_graphs
+    #plotly_graphs

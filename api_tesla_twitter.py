@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
     df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
     sqlite_connection.close()
-
+    print('finished step 1')
 
     
   

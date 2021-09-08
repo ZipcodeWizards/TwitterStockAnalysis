@@ -18,7 +18,7 @@ if __name__ == '__main__':
             .getOrCreate()
 
     sparkDF = spark.createDataFrame(df)
-    sparkDF = df.dropDuplicates()
+    sparkDF = sparkDF.distinct()
 
     # clean for retweets and only english
     sparkDFnoRT = sparkDF.filter(~sparkDF.text.startswith('RT'))
