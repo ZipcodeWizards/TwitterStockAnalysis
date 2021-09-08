@@ -6,10 +6,10 @@ from datetime import date, datetime
 from pytz import timezone
 import numpy as np
 
-def ret(value):
-    return value
 
-if __name__ == "__main__":
+
+
+def main5():
     # connect to db
     con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
     df = pd.read_sql_query("SELECT * FROM tsla_stock_prices WHERE date LIKE '2021-09-07%' ", con)
@@ -75,3 +75,6 @@ if __name__ == "__main__":
     # leave this as replace
     df_5.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
     sqlite_connection.close()
+
+if __name__ == '__main__':
+    main5()
