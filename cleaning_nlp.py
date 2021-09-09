@@ -11,7 +11,7 @@ from pytz import timezone
 
 
 def main3():
-    con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
+    con = sqlite3.connect('sentiment.db')
 
     #df = pd.read_sql_query("SELECT * FROM spark_cleaned", con)
     df = pd.read_sql_query("SELECT * FROM spark_cleaned WHERE date_time LIKE '2021-09-07%' ", con)

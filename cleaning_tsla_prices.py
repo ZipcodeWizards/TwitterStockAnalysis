@@ -58,7 +58,8 @@ def main5():
 
     # create a new df without values after 4:30
     for index, row in df_4.iterrows():
-    #print(row.to_frame())
+        print(row)
+        print('hello')
         if row['time'] != '16:30':
             df_5 = df_5.append(row)
         else:
@@ -70,10 +71,12 @@ def main5():
     sqlite_connection = engine.connect()
 
     sqlite_table = "tsla_prices_cleaned"
+    
 
     # leave this as replace
     df_5.to_sql(sqlite_table, sqlite_connection, if_exists = 'replace')
     sqlite_connection.close()
+    print(df_5)
 
 if __name__ == '__main__':
     main5()
