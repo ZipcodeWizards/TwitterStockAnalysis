@@ -11,7 +11,7 @@ import numpy as np
 
 def main5():
     # connect to db
-    con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
+    con = sqlite3.connect('sentiment.db')
     df = pd.read_sql_query("SELECT * FROM tsla_stock_prices WHERE date LIKE '2021-09-07%' ", con)
     
     # create new columns, last and date
