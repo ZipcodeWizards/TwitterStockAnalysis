@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 def main2():
     con = sqlite3.connect('sentiment.db')
 
-    df = pd.read_sql_query("SELECT * FROM sentiment WHERE date_time LIKE '2021-09-05%' ", con)
+    df = pd.read_sql_query("SELECT * FROM sentiment WHERE date_time LIKE '2021-09-07%' ", con)
 
     # create SparkSession
     spark = SparkSession.builder \
