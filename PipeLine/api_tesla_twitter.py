@@ -91,7 +91,7 @@ def main():
         db_create('sentiment.db')
 
     # modify this to your local path 
-    engine = create_engine('sqlite:///sentiment.db', echo = True)
+    engine = create_engine('sqlite:///', echo = True)
     sqlite_connection = engine.connect()
     sqlite_table = "sentiment"
 
