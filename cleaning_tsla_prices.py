@@ -11,12 +11,11 @@ import numpy as np
 
 def main5():
     # connect to db
-    con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
-    df = pd.read_sql_query("SELECT * FROM tsla_stock_prices WHERE date LIKE '2021-09-07%' ", con)
+    con = sqlite3.connect('sentiment.db')
+    df = pd.read_sql_query("SELECT * FROM tsla_stock_prices WHERE date LIKE '2021-09-05%' ", con)
     
     # create new columns, last and date
     df_2_columns = df[['last', 'date']]
-
     # clean up 'T' and '+' from strings
     for index, row in df_2_columns['date'].iteritems():
         df_2_columns.loc[index, 'date'] = row.replace('T', ' ').replace('+', '')
@@ -48,6 +47,7 @@ def main5():
     df_2_columns = df_2_columns.drop(columns = 'date_est')
 
     df_3 = df_2_columns
+    print('hello\n\n\n\n\n,', df_3)
 
     # our select statement, probably gonna modify
     df_4 = df_3[df_3['new_date'].str.match('2021-09-03')]

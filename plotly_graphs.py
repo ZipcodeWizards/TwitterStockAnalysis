@@ -76,7 +76,7 @@ def main6():
     #dftweets= pd.read_csv('data_graph.csv')
     con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
     # need select word cloud from the day before
-    dftweets = pd.read_sql_query("SELECT * FROM nlp_analysis WHERE date LIKE '2021-09-05%'", con)   
+    dftweets = pd.read_sql_query("SELECT * FROM nlp_analysis WHERE new_date LIKE '2021-09-05%'", con)   
     dfstock = pd.read_sql_query("SELECT * FROM tsla_prices_cleaned WHERE date LIKE '2021-09-07%'", con)  
 
     line_graph()
