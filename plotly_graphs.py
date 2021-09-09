@@ -10,6 +10,7 @@ from plotly.subplots import make_subplots
 from PIL import Image
 from IPython.display import display
 
+
 def main6():
 #word clound
     def create_wordcloud(text):
@@ -27,7 +28,7 @@ def main6():
     #line graph plot
 
     def line_graph():
-        dftweets_2 = dftweets[dftweets['new_date'].str.match('2021-09-05')]
+        dftweets_2 = dftweets[dftweets['new_date'].str.match('2021-09-07')]
 
         dftweets_2 = dftweets_2.sort_values(by = ['time'])
 
@@ -76,8 +77,8 @@ def main6():
     #dftweets= pd.read_csv('data_graph.csv')
     con = sqlite3.connect('/Users/sean/labs/Capstone/TwitterStockAnalysis/sentiment.db')
     # need select word cloud from the day before
-    dftweets = pd.read_sql_query("SELECT * FROM nlp_analysis WHERE date LIKE '2021-09-05%'", con)   
-    dfstock = pd.read_sql_query("SELECT * FROM tsla_prices_cleaned WHERE date LIKE '2021-09-07%'", con)  
+    dftweets = pd.read_sql_query("SELECT * FROM nlp_analysis WHERE new_date LIKE '2021-09-07%'", con)   
+    dfstock = pd.read_sql_query("SELECT * FROM tsla_prices_cleaned WHERE new_date LIKE '2021-09-07%'", con)  
 
     line_graph()
     create_wordcloud(dftweets["text"].values)

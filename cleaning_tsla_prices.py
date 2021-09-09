@@ -16,7 +16,6 @@ def main5():
     
     # create new columns, last and date
     df_2_columns = df[['last', 'date']]
-
     # clean up 'T' and '+' from strings
     for index, row in df_2_columns['date'].iteritems():
         df_2_columns.loc[index, 'date'] = row.replace('T', ' ').replace('+', '')
@@ -48,13 +47,13 @@ def main5():
     df_2_columns = df_2_columns.drop(columns = 'date_est')
 
     df_3 = df_2_columns
-
+    #print('df3/n/n/n/n/n', df_3)
     # our select statement, probably gonna modify
-    df_4 = df_3[df_3['new_date'].str.match('2021-09-03')]
+    df_4 = df_3[df_3['new_date'].str.match('2021-09-07')]
 
 
     df_4 = df_4.sort_values(by = ['time'])
-
+    #print('df_4\n\n\n\n\n', df_4)
     df_5 = pd.DataFrame()
 
     # create a new df without values after 4:30
