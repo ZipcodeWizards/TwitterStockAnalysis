@@ -1,1 +1,10 @@
 <h1>ZipcodeWizards</h1>
+<form>
+<select name="date" method="GET" action="/">
+    {% for date in dates %}
+        <option value="{{date}}" SELECTED>{{date}}</option>"
+    {% endfor %}
+</select>
+<br><br>
+<input type="submit" value="Submit">
+</form>
