@@ -42,6 +42,7 @@ def main():
         text = []
         retweeted = []
         lang = []
+        
         try:
             tweets = api.search(q="tesla -filter:retweets",
                             tweet_mode = "extended", 
@@ -49,7 +50,9 @@ def main():
                             include_rts = False, 
                             count = 200)
         except tweepy.error.RateLimitError:
-                print('timed out, too many request')
+                print('no tweets')
+                df = pd.DataFrame({'screen_name': 'name', 'date_time': 'date_time', 'text': 'text', 'retweeted': 'Flase', 'lang': 'en'})
+                return df 
                 
         all_tweets = []
         all_tweets.extend(tweets)

@@ -9,10 +9,10 @@ import numpy as np
 
 
 
-def main5():
+def main5(date):
     # connect to db
     con = sqlite3.connect('sentiment.db')
-    df = pd.read_sql_query("SELECT * FROM tsla_stock_prices WHERE date LIKE '2021-09-07%' ", con)
+    df = pd.read_sql_query(f"SELECT * FROM tsla_stock_prices WHERE date LIKE '{date}%' ", con)
     
     # create new columns, last and date
     df_2_columns = df[['last', 'date']]
@@ -49,7 +49,7 @@ def main5():
     df_3 = df_2_columns
     #print('df3/n/n/n/n/n', df_3)
     # our select statement, probably gonna modify
-    df_4 = df_3[df_3['new_date'].str.match('2021-09-07')]
+    df_4 = df_3[df_3['new_date'].str.match(f'{date}')]
 
 
     df_4 = df_4.sort_values(by = ['time'])
@@ -79,4 +79,8 @@ def main5():
     print(df_5)
 
 if __name__ == '__main__':
-    main5()
+    from datetime import date
+    from datetime import timedelta
+    today = date.today()
+    yesterday = today - timedelta(days = 1)
+    main5(yesterday)
