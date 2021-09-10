@@ -7,10 +7,10 @@ from sqlalchemy import create_engine
 
 
 
-def main2():
+def main2(date):
     con = sqlite3.connect('sentiment.db')
 
-    df = pd.read_sql_query("SELECT * FROM sentiment WHERE date_time LIKE '2021-09-07%' ", con)
+    df = pd.read_sql_query(f"SELECT * FROM sentiment WHERE date_time LIKE '{date}%' ", con)
 
     # create SparkSession
     spark = SparkSession.builder \
@@ -45,4 +45,8 @@ def main2():
     spark.stop()
 
 if __name__ == '__main__':
-        main2()
+        from datetime import date
+        from datetime import timedelta
+        today = date.today()
+        yesterday = today - timedelta(days = 1)
+        main2(yesterday)
