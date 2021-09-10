@@ -6,6 +6,7 @@ import cleaning_spark
 import cleaning_nlp
 import cleaning_tsla_prices
 import plotly_graphs
+import main
 
 
 def dates_from_twitter():
@@ -25,21 +26,27 @@ def dates_from_stock():
     return twdates
 
 if __name__ == "__main__":
-    choice = input('')
-    l1 = dates_from_twitter()
-    l2 = dates_from_stock()
-    l3 = []
-    for d in l1:
-        for s in l2:
-            if d == s:
-                l3.append(d)
-    for i in l3:
-        print(i)
-    date = str(input("Pick a date to analize :"))
-    cleaning_spark.main2(date)
-    cleaning_nlp.main3(date)
-    cleaning_tsla_prices.main5(date)
-    plotly_graphs.main6(date)
+    choice = input('Would you like run todays data(1) or pick a old data(2) :')
+    if choice == '1':
+        main.run_it_all()
+    else:
+        l1 = dates_from_twitter()
+        l2 = dates_from_stock()
+        l3 = []
+        for d in l1:
+            for s in l2:
+                if d == s:
+                    l3.append(d)
+        if len(l3) == 0:
+            print('no old data to run')
+        else:
+            for i in l3:
+                print(i)
+            date = str(input("Pick a date to analyze :"))
+            cleaning_spark.main2(date)
+            cleaning_nlp.main3(date)
+            cleaning_tsla_prices.main5(date)
+            plotly_graphs.main6(date)
     
 
      

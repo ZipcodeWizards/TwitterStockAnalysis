@@ -11,13 +11,16 @@ from datetime import timedelta
 today = date.today()
 yesterday = today - timedelta(days = 1)
 #set run_date to yesterday in moring or night use today when running main.py
-run_date = yesterday
+run_date = today
 
-if __name__ == '__main__':
+def run_it_all():
     api_tesla_twitter.main()
     cleaning_spark.main2(run_date)
     cleaning_nlp.main3(run_date)
     api_tesla_stock.main4()
     cleaning_tsla_prices.main5(run_date)
     plotly_graphs.main6(run_date)
+
+if __name__ == '__main__':
+    run_it_all()
     
