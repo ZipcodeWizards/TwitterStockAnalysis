@@ -2,11 +2,11 @@ import tweepy
 from time import sleep
 from sqlite3 import connect
 from sean_keys import consumer_key, consumer_secret, access_token, access_token_secret
-from sys import exit
+import sys
 import pandas as pd
 from sqlalchemy import create_engine
 from os.path import isfile
-from os import access, R_OK
+from os import access, R_OK, system
 def main():
     # connect to api
     def oauth_authenticate():
@@ -48,11 +48,10 @@ def main():
                             tweet_mode = "extended", 
                             lang = 'en', 
                             include_rts = False, 
-                            count = 200)
+                            count = 200,)
         except tweepy.error.RateLimitError:
-                print('no tweets')
-                df = pd.DataFrame({'screen_name': 'name', 'date_time': 'date_time', 'text': 'text', 'retweeted': 'Flase', 'lang': 'en'})
-                return df 
+                print('no tweets, exiting program')
+                sys.exit()
                 
         all_tweets = []
         all_tweets.extend(tweets)
@@ -109,22 +108,7 @@ def main():
 if __name__ == "__main__":
     main()
    
-    # df = create_df()
-    # print(df)
-
-    # if not db_file_exists('sentiment.db'):
-    #     db_create('sentiment.db')
-
-    # # modify this to your local path 
-    # engine = create_engine('sqlite:///sentiment.db', echo = True)
-    # sqlite_connection = engine.connect()
-    # sqlite_table = "sentiment"
-
-    # # create table schema
-
-
-    # df.to_sql(sqlite_table, sqlite_connection, if_exists = 'append')
-    # sqlite_connection.close()
+    
 
 
     
