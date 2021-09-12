@@ -1,3 +1,4 @@
+from datetime import date
 import pandas as pd
 import sqlite3
 from sqlite3 import connect
@@ -11,7 +12,7 @@ from PIL import Image
 from IPython.display import display
 
 
-def main6():
+def main6(date):
 #word clound
     def create_wordcloud(text):
         mask = np.array(Image.open("cloud.png"))
@@ -28,7 +29,7 @@ def main6():
     #line graph plot
 
     def line_graph():
-        dftweets_2 = dftweets[dftweets['new_date'].str.match('2021-09-07')]
+        dftweets_2 = dftweets[dftweets['new_date'].str.match(f'{date}')]
 
         dftweets_2 = dftweets_2.sort_values(by = ['time'])
 
@@ -61,7 +62,7 @@ def main6():
         )
         # Add figure title
         fig.update_layout(
-            title_text="Stock and Tweet Sentiment"
+            title_text=f"Stock and Tweet Sentiment for {date}"
         )
 
         # Set x-axis title
@@ -77,10 +78,14 @@ def main6():
     #dftweets= pd.read_csv('data_graph.csv')
     con = sqlite3.connect('sentiment.db')
     # need select word cloud from the day before
-    dftweets = pd.read_sql_query("SELECT * FROM nlp_analysis WHERE new_date LIKE '2021-09-07%'", con)   
-    dfstock = pd.read_sql_query("SELECT * FROM tsla_prices_cleaned WHERE new_date LIKE '2021-09-07%'", con)  
+    dftweets = pd.read_sql_query(f"SELECT * FROM nlp_analysis WHERE new_date LIKE '{date}%'", con)   
+    dfstock = pd.read_sql_query(f"SELECT * FROM tsla_prices_cleaned WHERE new_date LIKE '{date}%'", con)  
 
     line_graph()
     create_wordcloud(dftweets["text"].values)
 if __name__ == "__main__":
-    main6()
+    from datetime import date
+    from datetime import timedelta
+    today = date.today()
+    yesterday = today - timedelta(days = 1)
+    main6(yesterday)
